@@ -22,3 +22,23 @@ snow. We make use of landsat 8 data which is freely available on internet.
 
 # What is done in this project
 
+-> The primary data used in the project is landsat 8 satellite data. we download it from USGS earth explorer.
+
+-> NDSI index: It is a spectral index commonly used in remote sensing to detect the presence
+of snow in satellite imagery. NDSI is designed to highlight the contrast
+between snow and other surfaces, such as vegetation or soil, based on their
+reflectance properties in different spectral bands. Higher NDSI values typically
+indicate a higher likelihood of snow cover, while lower values indicate less
+snow cover or the presence of other surface types.
+
+-> NDFSI ( Normalised Difference Forested Snow Index): It is a spectral index proposed in the paper "An effective fractional snow cover
+Estimation method using deep feature snow Index" by Yuhan Wang, Lingjia
+Gu[1]. This index is a derivative of NDSI index but instead of using visible
+bands this index makes use of Near infrared band and SWIR band of landsat
+8 data to predict the snow pixels.
+
+-> QGIS: We use raster calculator function from QGIS to generate NDFSI mask for each for the downloaded data. 
+
+-> Thresholding: We threshold the mask at a value of 0.4 to create a binary image.( >0.4 means snow, this value is commonly used one). hence our dataset is created.
+
+-> Training: We use a unet architecture to train our model. With Green, NIR, SWIR bands as input and binary mask as output.
