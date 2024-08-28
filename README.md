@@ -42,3 +42,5 @@ bands this index makes use of Near infrared band and SWIR band of landsat
 -> Thresholding: We threshold the mask at a value of 0.4 to create a binary image.( >0.4 means snow, this value is commonly used one). hence our dataset is created.
 
 -> Training: We use a unet architecture to train our model. With Green, NIR, SWIR bands as input and binary mask as output.
+
+note:: The dataset used:: https://www.kaggle.com/datasets/jithuj/snowcap-northsikkim
