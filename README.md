@@ -64,5 +64,4 @@ This project uses satellite imagery and machine learning techniques to map snow 
   - Total region area: 33300 sq.km  
   - Estimated snow-covered area: **~2221 sq.km**
 
-## 📁 Directory Structure
 
