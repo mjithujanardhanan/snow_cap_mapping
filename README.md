@@ -1,46 +1,68 @@
-# snow_cap_mapping
-this project is aimed at developing a model which can map the snowcap from satellite images
+# 🏔️ Snow Cover Mapping in Indian Himalayas using Machine Learning
 
-# Introduction
+This project uses satellite imagery and machine learning techniques to map snow cover in the Indian Himalayan region. It combines classical remote sensing indices like NDSI/NDFSI with modern image segmentation using U-Net to estimate fractional snow cover area with high precision.
 
-The Indian Himalayas, characterized by their rugged terrain and extreme climatic
-conditions, are home to vast expanses of snow-covered landscapes, playing
-a critical role in regional hydrology, ecology, and livelihoods. Accurate
-monitoring and mapping of snow cover in this region are essential for various
-applications, including water resource management, climate change studies,
-and hazard mitigation. Satellite remote sensing offers a powerful tool
-for observing snow cover dynamics over large spatial extents; however, traditional
-methods for snow cover mapping often encounter challenges in complex
-mountainous terrains.
-In recent years, the advent of machine learning (ML) techniques has provided
-new avenues for improving the accuracy and efficiency of snow cover mapping
-from satellite imagery. ML algorithms have demonstrated remarkable capabilities
-in image classification tasks, leveraging complex patterns and spectral
-information to accurately delineate snow-covered areas.
-Here we are trying to use ML techniques to identify the pixels which contains
-snow. We make use of landsat 8 data which is freely available on internet.
+## 📌 Overview
 
-# What is done in this project
+- **Goal**: Accurately map and quantify snow-covered regions in the Himalayas using Landsat 8 satellite data.
+- **Techniques**: Raster Indexing (NDSI/NDFSI), K-means Clustering, Deep Learning (U-Net)
+- **Tools**: QGIS, Python, Keras, TensorFlow, NumPy, Landsat 8 satellite data
 
--> The primary data used in the project is landsat 8 satellite data. we download it from USGS earth explorer.
+## ❄️ Objectives
 
--> NDSI index: It is a spectral index commonly used in remote sensing to detect the presence
-of snow in satellite imagery. NDSI is designed to highlight the contrast
-between snow and other surfaces, such as vegetation or soil, based on their
-reflectance properties in different spectral bands. Higher NDSI values typically
-indicate a higher likelihood of snow cover, while lower values indicate less
-snow cover or the presence of other surface types.
+- Acquire and preprocess Landsat 8 data
+- Segment satellite imagery to distinguish snow-covered pixels
+- Combine classical NDSI/NDFSI indices with deep learning methods
+- Estimate fractional snow cover and compute snow-covered area in sq. km
 
--> NDFSI ( Normalised Difference Forested Snow Index): It is a spectral index proposed in the paper "An effective fractional snow cover
-Estimation method using deep feature snow Index" by Yuhan Wang, Lingjia
-Gu[1]. This index is a derivative of NDSI index but instead of using visible
-bands this index makes use of Near infrared band and SWIR band of landsat
-8 data to predict the snow pixels.
+## 🛰️ Data & Tools
 
--> QGIS: We use raster calculator function from QGIS to generate NDFSI mask for each for the downloaded data. 
+- **Satellite Data**: Landsat 8 (Bands 2, 3, 4, 5, 6)
+- **Platform**: [USGS Earth Explorer](https://earthexplorer.usgs.gov/)
+- **Software**:
+  - QGIS (for raster operations and NDSI/NDFSI mask generation)
+  - Python (for training U-Net and post-processing)
+  - TensorFlow & Keras (for model development)
 
--> Thresholding: We threshold the mask at a value of 0.4 to create a binary image.( >0.4 means snow, this value is commonly used one). hence our dataset is created.
+## 📊 Methodology
 
--> Training: We use a unet architecture to train our model. With Green, NIR, SWIR bands as input and binary mask as output.
+### ✅ Classical Remote Sensing
 
-note:: The dataset used:: https://www.kaggle.com/datasets/jithuj/snowcap-northsikkim
+- **NDSI (Normalized Difference Snow Index)**  
+  Formula: `(Green - SWIR) / (Green + SWIR)`  
+  Threshold: 0.4
+
+- **NDFSI (Normalized Difference Forested Snow Index)**  
+  Formula: `(NIR - SWIR) / (NIR + SWIR)`  
+  Threshold: 0.4
+
+- Used QGIS Raster Calculator to create snow masks using the above indices
+
+### 🧠 Machine Learning
+
+- **K-means Clustering**:
+  - Unsupervised clustering into 3 clusters to identify snow pixels (based on intensity)
+  - Used as a baseline method
+
+- **U-Net for Image Segmentation**:
+  - Input: Landsat Bands 3, 5, 6
+  - Output: Binary mask of snow-covered area
+  - Trained on NDFSI-generated masks as ground truth
+
+### 📐 Area Estimation
+
+- Landsat resolution: 30m × 30m = 900 m²/pixel
+- Formula: `Total Snow Area = (#snow pixels × 900) / 1e6 (sq. km)`
+
+## 📈 Results
+
+- **Date of Observation**: August 20, 2023
+- **Area Analyzed**: Region around Sikkim, extending to parts of China, Nepal, and Bhutan
+- **Estimated Snow Cover**:  
+  - 4371 snow pixels  
+  - Snow cover %: ~6.67%  
+  - Total region area: 33300 sq.km  
+  - Estimated snow-covered area: **~2221 sq.km**
+
+## 📁 Directory Structure
+
